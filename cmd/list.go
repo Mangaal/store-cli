@@ -17,7 +17,7 @@ import (
 var listCmd = &cobra.Command{
 	Use:   "ls",
 	Short: "store ls will list all the files",
-	Long:  `.`,
+	Long:  ``,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("list called")
 
