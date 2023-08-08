@@ -47,7 +47,7 @@ func init() {
 func listFile() {
 
 	// Make the HTTP POST request
-	url := "http://" + URL + "/apis/files"
+	url := "http://" + URL + "/files"
 	response, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		fmt.Println("Error making POST request:", err)

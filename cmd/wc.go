@@ -16,7 +16,7 @@ import (
 // wcCmd represents the wc command
 var wcCmd = &cobra.Command{
 	Use:   "wc",
-	Short: "A brief description of your command",
+	Short: "store wc",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
 
@@ -71,6 +71,6 @@ func wc(limit string, sort string) {
 
 	json.Unmarshal(res, &Count)
 
-	fmt.Println("total work could ", Count.TotalWordCount)
+	fmt.Println("total_word_could ", Count.TotalWordCount)
 
 }
