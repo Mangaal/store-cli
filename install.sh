@@ -4,7 +4,7 @@
 # Set the necessary environment variables
 CLI_NAME="store"
 INSTALL_PATH="/usr/local/bin"
-CLI_URL="https://github.com/Mangaal/store-cli/raw/main/store"
+CLI_URL="https://github.com/Mangaal/store-cli/raw/main/downloads/store"
 
 # Download the latest release of your CLI
 curl -Lo "$CLI_NAME" "$CLI_URL"
