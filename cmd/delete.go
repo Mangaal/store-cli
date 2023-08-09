@@ -17,8 +17,12 @@ import (
 // deleteCmd represents the delete command
 var deleteCmd = &cobra.Command{
 	Use:   "rm",
-	Short: "store rm filenames....",
-	Long:  ``,
+	Short: "Delete Files from Server ",
+	Long: `Delete Files from Server 
+	         Example:
+
+	         store rm filenames....
+	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("delete called")
 

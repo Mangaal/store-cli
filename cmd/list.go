@@ -16,8 +16,12 @@ import (
 // listCmd represents the list command
 var listCmd = &cobra.Command{
 	Use:   "ls",
-	Short: "store ls will list all the files",
-	Long:  ``,
+	Short: "List all Uploaded Files in server",
+	Long: `List all Uploaded Files in server
+	        Example:
+			
+			store ls
+	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("list called")
 

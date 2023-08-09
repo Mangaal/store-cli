@@ -22,8 +22,12 @@ import (
 // addFileCmd represents the addFile command
 var addFileCmd = &cobra.Command{
 	Use:   "files",
-	Short: "store files filename....",
-	Long:  ``,
+	Short: "Uploads Files To Server",
+	Long: `Uploads Files To Server.
+	         Example
+
+		     store files filename....
+	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("addFile called")
 

@@ -16,8 +16,12 @@ import (
 // optionCmd represents the option command
 var optionCmd = &cobra.Command{
 	Use:   "freq-words",
-	Short: "store freq-words",
-	Long:  ``,
+	Short: "Get most frequently use words from the uploaded documentes",
+	Long: `Get most frequently use words from the uploaded documentes
+	         Example:
+
+	         store freq-words
+	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("option called")
 

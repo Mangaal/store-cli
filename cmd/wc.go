@@ -16,8 +16,12 @@ import (
 // wcCmd represents the wc command
 var wcCmd = &cobra.Command{
 	Use:   "wc",
-	Short: "store wc",
-	Long:  ``,
+	Short: "Counts the total no of Words",
+	Long: `Counts the total no of Words
+	         Example:
+
+			store wc 
+	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("wc called")
 
