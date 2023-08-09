@@ -43,8 +43,8 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	optionCmd.Flags().StringP("limit", "l", "10", "Help message for toggle")
-	optionCmd.Flags().StringP("sort", "s", "d", "Help message for toggle")
+	optionCmd.Flags().StringP("limit", "l", "10", "limit the no of output")
+	optionCmd.Flags().StringP("sort", "s", "d", "to get output stort in ascending or descending pass a for assending and b for decending")
 }
 
 func options(limit string, sort string) {
