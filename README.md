@@ -49,7 +49,12 @@ Clone the repository:
 ```
 Run the installation script:
 ```
-   ./install.sh
+   1 For windows run :  ./install.sh  windows
+
+   2 For linux run:  ./install.sh  linux
+
+   3 for darwin run:  ./install.sh  darwin
+    
 ```
 
 # Usage
