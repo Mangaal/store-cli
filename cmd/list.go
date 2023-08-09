@@ -16,8 +16,8 @@ import (
 // listCmd represents the list command
 var listCmd = &cobra.Command{
 	Use:   "ls",
-	Short: "List all Uploaded Files in server",
-	Long: `List all Uploaded Files in server
+	Short: "List all uploaded files in server",
+	Long: `List all uploaded files in server
 	        Example:
 			
 			store ls

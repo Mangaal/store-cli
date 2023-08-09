@@ -22,9 +22,9 @@ import (
 // addFileCmd represents the addFile command
 var addFileCmd = &cobra.Command{
 	Use:   "files",
-	Short: "Uploads Files To Server",
-	Long: `Uploads Files To Server.
-	         Example
+	Short: "Uploads files to server",
+	Long: `Uploads files to server.
+	         Example:
 
 		     store files filename....
 	`,

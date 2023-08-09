@@ -17,8 +17,8 @@ import (
 // deleteCmd represents the delete command
 var deleteCmd = &cobra.Command{
 	Use:   "rm",
-	Short: "Delete Files from Server ",
-	Long: `Delete Files from Server 
+	Short: "Delete files from server ",
+	Long: `Delete files from server 
 	         Example:
 
 	         store rm filenames....

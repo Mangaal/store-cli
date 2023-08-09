@@ -16,8 +16,8 @@ import (
 // wcCmd represents the wc command
 var wcCmd = &cobra.Command{
 	Use:   "wc",
-	Short: "Counts the total no of Words",
-	Long: `Counts the total no of Words
+	Short: "Counts the total no of words",
+	Long: `Counts the total no of words
 	         Example:
 
 			store wc 

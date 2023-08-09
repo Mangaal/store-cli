@@ -12,7 +12,7 @@ import (
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:     "store",
-	Short:   "store is a cli tools to upload files and read files data",
+	Short:   "Store is a cli tools to upload files and read files data",
 	Version: "v1.0.0",
 	Long:    `Store is a CLI tool developed using Cobra and the Go programming language. It interacts with the API exposed by the project Text Store to perform various file-related operations.`,
 	// Uncomment the following line if your bare application
