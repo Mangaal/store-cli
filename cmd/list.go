@@ -46,7 +46,7 @@ func init() {
 func listFile() {
 
 	// Make the HTTP POST request
-	url := "http://" + URL + "/files"
+	url := "http://" + URL + "/apis/files"
 	response, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		fmt.Println("Error making POST request:", err)
@@ -61,6 +61,13 @@ func listFile() {
 	defer resp.Body.Close()
 
 	res, _ := io.ReadAll(resp.Body)
+
+	if resp.StatusCode != 200 {
+
+		fmt.Println("Error from server:", resp.Status)
+
+		return
+	}
 
 	GoData := struct {
 		Fies []string `json:"files"`

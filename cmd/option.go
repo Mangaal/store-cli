@@ -50,7 +50,7 @@ func init() {
 func options(limit string, sort string) {
 
 	// Make the HTTP POST request
-	url := "http://" + URL + "/file/option/" + sort + "/" + limit
+	url := "http://" + URL + "/apis/file/option/" + sort + "/" + limit
 	response, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		fmt.Println("Error making POST request:", err)
@@ -60,6 +60,13 @@ func options(limit string, sort string) {
 	resp, err := client.Do(response)
 	if err != nil {
 		log.Fatalln(err)
+	}
+
+	if resp.StatusCode != 200 {
+
+		fmt.Println("Error from server:", resp.Status)
+
+		return
 	}
 
 	defer resp.Body.Close()

@@ -119,13 +119,20 @@ func File(files []string) {
 	writer.Close()
 
 	// Make the HTTP POST request
-	url := "http://" + URL + "/file"
+	url := "http://" + URL + "/apis/file"
 	response, err := http.Post(url, writer.FormDataContentType(), &requestBody)
 	if err != nil {
 		fmt.Println("Error making POST request:", err)
 		return
 	}
 	defer response.Body.Close()
+
+	if response.StatusCode != 200 {
+
+		fmt.Println("Error from server:", response.Status)
+
+		return
+	}
 
 	for name, key := range goData {
 
@@ -157,7 +164,7 @@ func check(fname string, contant string) bool {
 		if fname != dkey && code == generateHash(contant) {
 
 			// Make the HTTP POST request
-			url := "http://" + URL + "/file/" + fname + "/" + dkey
+			url := "http://" + URL + "/apis/file/" + fname + "/" + dkey
 			response, err := http.NewRequest("POST", url, nil)
 			if err != nil {
 				fmt.Println("Error making POST request:", err)
@@ -167,6 +174,13 @@ func check(fname string, contant string) bool {
 			resp, err := client.Do(response)
 			if err != nil {
 				log.Fatalln(err)
+				return true
+			}
+
+			if resp.StatusCode != 200 {
+
+				fmt.Println("Error from server:", resp.Status)
+
 				return true
 			}
 

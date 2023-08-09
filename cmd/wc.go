@@ -48,7 +48,7 @@ func init() {
 func wc(limit string, sort string) {
 
 	// Make the HTTP POST request
-	url := "http://" + URL + "/file/option/" + sort + "/" + limit
+	url := "http://" + URL + "/apis/file/option/" + sort + "/" + limit
 	response, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		fmt.Println("Error making POST request:", err)
@@ -63,6 +63,13 @@ func wc(limit string, sort string) {
 	defer resp.Body.Close()
 
 	res, _ := io.ReadAll(resp.Body)
+
+	if resp.StatusCode != 200 {
+
+		fmt.Println("Error from server:", resp.Status)
+
+		return
+	}
 
 	var Count struct {
 		TotalWordCount int `json:"totalWordCount"`

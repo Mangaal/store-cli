@@ -64,7 +64,7 @@ func deleteFile(files []string) {
 	body, _ := json.Marshal(FileBodyreq)
 
 	// Make the HTTP POST request
-	url := "http://" + URL + "/file/"
+	url := "http://" + URL + "/apis/file/"
 	response, err := http.NewRequest("DELETE", url, bytes.NewBuffer(body))
 	if err != nil {
 		fmt.Println("Error making POST request:", err)
@@ -77,6 +77,13 @@ func deleteFile(files []string) {
 	}
 
 	defer resp.Body.Close()
+
+	if resp.StatusCode != 200 {
+
+		fmt.Println("Error from server:", resp.Status)
+
+		return
+	}
 
 	res, _ := io.ReadAll(resp.Body)
 
