@@ -1,6 +1,8 @@
 package cmd
 
-import "os"
+import (
+	"os"
+)
 
 var URL string
 
@@ -16,5 +18,12 @@ func UploadDirectoryExists(uploadDirectory string) error {
 	if err != nil {
 		return err
 	}
+
+	if _, err := os.Stat(uploadDirectory + "/data.json"); os.IsNotExist(err) {
+
+		os.Create(uploadDirectory + "/data.json")
+
+	}
+
 	return nil
 }

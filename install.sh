@@ -1,8 +1,6 @@
 #!/bin/bash
 
-# export env
-export DATA_DIR="/tmp/da"
-export STORE_URL="localhost:8080"
+
 # Set the necessary environment variables
 CLI_NAME="store"
 INSTALL_PATH="/usr/local/bin"
@@ -16,5 +14,6 @@ chmod +x "$CLI_NAME"
 
 # Move the CLI to the installation path
 sudo mv "$CLI_NAME" "$INSTALL_PATH/"
+
 
 echo "Installation complete. You can now use '$CLI_NAME' to run the CLI."
