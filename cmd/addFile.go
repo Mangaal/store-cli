@@ -33,6 +33,8 @@ var addFileCmd = &cobra.Command{
 
 		if len(args) == 0 {
 
+			fmt.Println("got empty argument")
+
 			return
 		}
 
