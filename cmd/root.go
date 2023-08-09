@@ -11,9 +11,10 @@ import (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "store",
-	Short: "store is a cli tools to upload files and read files data",
-	Long:  ``,
+	Use:     "store",
+	Short:   "store is a cli tools to upload files and read files data",
+	Version: "v1.0.0",
+	Long:    ``,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	// Run: func(cmd *cobra.Command, args []string) { },
@@ -38,6 +39,6 @@ func init() {
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
-	rootCmd.Flags().StringP("version", "v", "v1.0", "Help message for toggle")
+
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
