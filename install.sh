@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# export env
+export DATA_DIR="/tmp/da"
 # Set the necessary environment variables
 CLI_NAME="store"
 INSTALL_PATH="/usr/local/bin"

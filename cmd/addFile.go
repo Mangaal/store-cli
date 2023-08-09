@@ -137,7 +137,7 @@ func File(files []string) {
 
 func check(fname string, contant string) bool {
 
-	file, err := os.Open("db/data.json")
+	file, err := os.Open(Data_Dir + "/data.json")
 
 	if err != nil {
 		fmt.Println("Error opening file:", err)
@@ -192,7 +192,7 @@ func check(fname string, contant string) bool {
 
 func updateDatabase(new string, old string, value string) {
 
-	file, err := os.Open("db/data.json")
+	file, err := os.Open(Data_Dir + "/data.json")
 
 	if err != nil {
 		fmt.Println("Error opening file:", err)
@@ -214,7 +214,7 @@ func updateDatabase(new string, old string, value string) {
 
 	datajson, _ = json.Marshal(goData)
 
-	os.WriteFile("db/data.json", datajson, 0644)
+	os.WriteFile(Data_Dir+"/data.json", datajson, 0644)
 
 }
 
