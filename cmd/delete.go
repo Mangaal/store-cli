@@ -32,7 +32,7 @@ var deleteCmd = &cobra.Command{
 
 			return
 		}
-		deleteFile(args)
+		DeleteFile(args)
 
 	},
 }
@@ -55,7 +55,7 @@ type FileBody struct {
 	Files []string `json:"files"`
 }
 
-func deleteFile(files []string) {
+func DeleteFile(files []string) (string, error) {
 
 	FileBodyreq := FileBody{}
 
@@ -64,11 +64,11 @@ func deleteFile(files []string) {
 	body, _ := json.Marshal(FileBodyreq)
 
 	// Make the HTTP POST request
-	url := "http://" + URL + "/apis/file/"
+	url := URL + "/apis/file/"
 	response, err := http.NewRequest("DELETE", url, bytes.NewBuffer(body))
 	if err != nil {
 		fmt.Println("Error making POST request:", err)
-		return
+		return "", err
 	}
 	client := &http.Client{}
 	resp, err := client.Do(response)
@@ -82,12 +82,14 @@ func deleteFile(files []string) {
 
 		fmt.Println("Error from server:", resp.Status)
 
-		return
+		return "", err
 	}
 
 	res, _ := io.ReadAll(resp.Body)
 
 	// Process the response
 	fmt.Println("Response status:", string(res))
+
+	return string(res), nil
 
 }

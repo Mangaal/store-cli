@@ -7,7 +7,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 
 	"github.com/spf13/cobra"
@@ -29,7 +28,7 @@ var optionCmd = &cobra.Command{
 
 		sort, _ := cmd.Flags().GetString("sort")
 
-		options(limit, sort)
+		Options(limit, sort)
 
 	},
 }
@@ -47,26 +46,26 @@ func init() {
 	optionCmd.Flags().StringP("sort", "s", "d", "to get output stort in ascending or descending pass a for assending and b for decending")
 }
 
-func options(limit string, sort string) {
+func Options(limit string, sort string) (string, error) {
 
 	// Make the HTTP POST request
-	url := "http://" + URL + "/apis/file/option/" + sort + "/" + limit
+	url := URL + "/apis/file/option/" + sort + "/" + limit
 	response, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		fmt.Println("Error making POST request:", err)
-		return
+		return "", err
 	}
 	client := &http.Client{}
 	resp, err := client.Do(response)
 	if err != nil {
-		log.Fatalln(err)
+		fmt.Println("Error making POST request:", err)
+		return "", err
 	}
 
 	if resp.StatusCode != 200 {
 
-		fmt.Println("Error from server:", resp.Status)
-
-		return
+		fmt.Println("Error making POST request:", err)
+		return "", err
 	}
 
 	defer resp.Body.Close()
@@ -86,5 +85,7 @@ func options(limit string, sort string) {
 
 		fmt.Printf("%d   %s \n", fname.Frequency, fname.Word)
 	}
+
+	return string(res), nil
 
 }

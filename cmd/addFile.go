@@ -57,7 +57,7 @@ func init() {
 	// addFileCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
-func File(files []string) {
+func File(files []string) (error, string) {
 
 	// Prepare the form data
 	var requestBody bytes.Buffer
@@ -67,38 +67,42 @@ func File(files []string) {
 
 	requestBodylen := requestBody.Len()
 
+	var isUpdate *bool
+	value := false
+	isUpdate = &value
+
 	// Add multiple files to the form data // Add your file paths here
 	for _, filePath := range files {
 		file, err := os.Open(filePath)
 		if err != nil {
 			fmt.Println("Error opening file:", err)
-			return
+			return err, ""
 		}
 
 		filetmp, err := os.Open(filePath)
 		if err != nil {
 			fmt.Println("Error opening file:", err)
-			return
+			return err, ""
 		}
 
 		content, err := io.ReadAll(filetmp)
 
 		if err != nil {
 
-			return
+			return err, ""
 		}
 
-		if check(file.Name(), string(content)) {
+		if Check(file.Name(), string(content), isUpdate) {
 
 			fileField, err := writer.CreateFormFile("files", filepath.Base(filePath))
 			if err != nil {
 				fmt.Println("Error creating form file:", err)
-				return
+				return err, ""
 			}
 			_, err = io.Copy(fileField, file)
 			if err != nil {
 				fmt.Println("Error copying file data:", err)
-				return
+				return err, ""
 			}
 
 			goData[file.Name()] = generateHash(string(content))
@@ -107,11 +111,19 @@ func File(files []string) {
 
 	}
 
-	if requestBody.Len() == requestBodylen {
+	if requestBody.Len() == requestBodylen && !*isUpdate {
 
 		fmt.Println("Files in sync no change")
 
-		return
+		return nil, "Files in sync no change"
+
+	}
+
+	if requestBody.Len() == requestBodylen && *isUpdate {
+
+		fmt.Println("Files uploaded successfully")
+
+		return nil, "Files uploaded successfully"
 
 	}
 
@@ -119,11 +131,11 @@ func File(files []string) {
 	writer.Close()
 
 	// Make the HTTP POST request
-	url := "http://" + URL + "/apis/file"
+	url := URL + "/apis/file"
 	response, err := http.Post(url, writer.FormDataContentType(), &requestBody)
 	if err != nil {
 		fmt.Println("Error making POST request:", err)
-		return
+		return err, ""
 	}
 	defer response.Body.Close()
 
@@ -131,7 +143,7 @@ func File(files []string) {
 
 		fmt.Println("Error from server:", response.Status)
 
-		return
+		return nil, ""
 	}
 
 	for name, key := range goData {
@@ -139,12 +151,16 @@ func File(files []string) {
 		updateDatabase(name, "", key)
 
 	}
+
+	body, _ := io.ReadAll(response.Body)
 	// Process the response
 	fmt.Println("Response status:", response.Status)
 
+	return nil, string(body)
+
 }
 
-func check(fname string, contant string) bool {
+func Check(fname string, contant string, isupdate *bool) bool {
 
 	file, err := os.Open(Data_Dir + "/data.json")
 
@@ -164,7 +180,7 @@ func check(fname string, contant string) bool {
 		if fname != dkey && code == generateHash(contant) {
 
 			// Make the HTTP POST request
-			url := "http://" + URL + "/apis/file/" + fname + "/" + dkey
+			url := URL + "/apis/file/" + fname + "/" + dkey
 			response, err := http.NewRequest("POST", url, nil)
 			if err != nil {
 				fmt.Println("Error making POST request:", err)
@@ -191,7 +207,7 @@ func check(fname string, contant string) bool {
 			fmt.Println(string(res))
 
 			updateDatabase(fname, dkey, code)
-
+			*isupdate = true
 			return false
 
 		}

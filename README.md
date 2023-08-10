@@ -38,7 +38,7 @@
 ### API URL for the Text Store project
 
 ```
-   export STORE_URL="localhost:8080"
+   export STORE_URL="http://localhost:8080"
 ```
 
 Clone the repository:

@@ -7,7 +7,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 
 	"github.com/spf13/cobra"
@@ -25,7 +24,7 @@ var listCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("list called")
 
-		listFile()
+		ListFile()
 	},
 }
 
@@ -43,19 +42,21 @@ func init() {
 	// listCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
-func listFile() {
+func ListFile() (string, error) {
 
 	// Make the HTTP POST request
-	url := "http://" + URL + "/apis/files"
+	url := URL + "/apis/files"
 	response, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		fmt.Println("Error making POST request:", err)
-		return
+		return "", err
 	}
 	client := &http.Client{}
 	resp, err := client.Do(response)
 	if err != nil {
-		log.Fatalln(err)
+		fmt.Println("Error making POST request:", err)
+		return "", err
+
 	}
 
 	defer resp.Body.Close()
@@ -66,7 +67,7 @@ func listFile() {
 
 		fmt.Println("Error from server:", resp.Status)
 
-		return
+		return "", err
 	}
 
 	GoData := struct {
@@ -79,5 +80,7 @@ func listFile() {
 
 		fmt.Println(fname)
 	}
+
+	return string(res), nil
 
 }

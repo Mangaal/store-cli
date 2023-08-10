@@ -7,7 +7,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 
 	"github.com/spf13/cobra"
@@ -25,7 +24,7 @@ var wcCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("wc called")
 
-		wc("1", "d")
+		WC("1", "d")
 
 	},
 }
@@ -45,19 +44,20 @@ func init() {
 
 }
 
-func wc(limit string, sort string) {
+func WC(limit string, sort string) (string, error) {
 
 	// Make the HTTP POST request
-	url := "http://" + URL + "/apis/file/option/" + sort + "/" + limit
+	url := URL + "/apis/file/option/" + sort + "/" + limit
 	response, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		fmt.Println("Error making POST request:", err)
-		return
+		return "", err
 	}
 	client := &http.Client{}
 	resp, err := client.Do(response)
 	if err != nil {
-		log.Fatalln(err)
+		fmt.Println("Error making POST request:", err)
+		return "", err
 	}
 
 	defer resp.Body.Close()
@@ -68,7 +68,7 @@ func wc(limit string, sort string) {
 
 		fmt.Println("Error from server:", resp.Status)
 
-		return
+		return "", err
 	}
 
 	var Count struct {
@@ -78,5 +78,7 @@ func wc(limit string, sort string) {
 	json.Unmarshal(res, &Count)
 
 	fmt.Println("total_word_could ", Count.TotalWordCount)
+
+	return string(res), nil
 
 }
